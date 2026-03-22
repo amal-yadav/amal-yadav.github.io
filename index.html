@@ -4,9 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aman Singh — AI Automation Engineer</title>
+
+  <!-- Security headers (meta tags — GitHub Pages doesn't allow HTTP headers) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src https://fonts.gstatic.com;
+    img-src 'self' data:;
+    connect-src 'self';
+    base-uri 'self';
+    form-action 'none';
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
+
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
@@ -134,8 +151,8 @@
         I'm available for freelance work. Let's build something together.
       </p>
       <div class="contact-methods">
-        <a href="mailto:amaniitd13@gmail.com" class="contact-btn">📧 amaniitd13@gmail.com</a>
-        <a href="https://github.com/amal-yadav" class="contact-btn" target="_blank">🐙 GitHub</a>
+        <a href="#" class="contact-btn" id="emailBtn" data-u="amaniitd13" data-d="gmail.com">📧 <span id="emailText">Enable JS to see email</span></a>
+        <a href="https://github.com/amal-yadav" class="contact-btn" target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
       </div>
       <p class="contact-note">Confidentiality guaranteed &nbsp;·&nbsp; Starting at $25 USD/hr</p>
     </div>
@@ -143,7 +160,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2026 Aman Singh &nbsp;·&nbsp; <a href="mailto:amaniitd13@gmail.com">amaniitd13@gmail.com</a></p>
+    <p>© 2026 Aman Singh &nbsp;·&nbsp; <a href="#" id="footerEmail">amaniitd13<span class="at">[at]</span>gmail.com</a></p>
   </footer>
 
   <script src="script.js"></script>

@@ -54,3 +54,21 @@ document.querySelectorAll('.project-card').forEach(el => {
 const style = document.createElement('style');
 style.textContent = `.project-card.visible { opacity: 1 !important; transform: translateY(0) !important; }`;
 document.head.appendChild(style);
+
+// ── Email obfuscation (anti-scraper) ──────────────────
+(function () {
+  const btn = document.getElementById('emailBtn');
+  if (!btn) return;
+  const u = btn.getAttribute('data-u');
+  const d = btn.getAttribute('data-d');
+  const addr = u + '@' + d;
+  const text = document.getElementById('emailText');
+  if (text) text.textContent = addr;
+  btn.href = 'mai' + 'lto:' + addr;
+
+  const footer = document.getElementById('footerEmail');
+  if (footer) {
+    footer.href = 'mai' + 'lto:' + addr;
+    footer.textContent = addr;
+  }
+})();
