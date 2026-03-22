@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <!-- Background gradient: deep navy to rich indigo -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0c29"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+
+    <!-- Letter gradient: electric blue to cyan -->
+    <linearGradient id="letterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4fc3f7"/>
+      <stop offset="50%" stop-color="#2979ff"/>
+      <stop offset="100%" stop-color="#7c4dff"/>
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle inner shadow on bg -->
+    <filter id="innerShadow">
+      <feFlood flood-color="#7c4dff" flood-opacity="0.15" result="color"/>
+      <feComposite in="color" in2="SourceGraphic" operator="in" result="inner"/>
+      <feGaussianBlur in="inner" stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode in="blur"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect width="100" height="100" rx="22" ry="22" fill="url(#bgGrad)"/>
+
+  <!-- Subtle border glow -->
+  <rect width="100" height="100" rx="22" ry="22"
+        fill="none"
+        stroke="url(#letterGrad)"
+        stroke-width="1.2"
+        opacity="0.5"/>
+
+  <!-- Letter A — geometric, clean, premium -->
+  <!-- Built from paths: two diagonal strokes + crossbar -->
+  <g filter="url(#glow)" fill="url(#letterGrad)">
+    <!-- Left leg -->
+    <polygon points="50,14 34,82 42,82 50,30 58,82 66,82" fill="none"/>
+
+    <!-- Full A shape using path -->
+    <path d="
+      M50 14
+      L22 82
+      L31 82
+      L38.5 62
+      L61.5 62
+      L69 82
+      L78 82
+      L50 14
+      Z
+      M42 54
+      L50 30
+      L58 54
+      Z
+    " fill="url(#letterGrad)"/>
+  </g>
+
+  <!-- Top dot / diamond accent for premium feel -->
+  <polygon points="50,7 53.5,11 50,15 46.5,11"
+           fill="#4fc3f7"
+           opacity="0.9"
+           filter="url(#glow)"/>
+</svg>
