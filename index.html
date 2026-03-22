@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aman Singh — AI Automation Engineer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">aman<span class="accent">.</span>dev</span>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-tag">AI Automation Engineer</p>
+      <h1>Hi, I'm <span class="accent">Aman Singh</span>.<br />I make AI run<br />on <span class="accent">your machine.</span></h1>
+      <p class="hero-sub">
+        Local AI models up to 9 billion parameters. Custom automation pipelines.
+        No cloud. No subscriptions. Everything on your own PC.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-secondary">Hire Me</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="t-dim">~$</span> ollama run llama3:9b</p>
+          <p><span class="t-green">✔</span> Model loaded locally</p>
+          <p><span class="t-dim">~$</span> python automate.py</p>
+          <p><span class="t-green">✔</span> Pipeline running...</p>
+          <p><span class="t-dim">~$</span> <span class="t-cursor">█</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="section-inner">
+      <h2>About Me</h2>
+      <p>
+        I'm an AI Automation Engineer who believes powerful AI shouldn't need a cloud subscription.
+        I specialise in running large language models locally — up to <strong>9 billion parameters</strong> —
+        and wiring them into automation pipelines tailored to your workflow.
+      </p>
+      <p>
+        I also build games as a creative outlet, combining storytelling with technical craft.
+        Whether it's AI or game dev, I love building things that feel like magic from the outside
+        but are clean engineering on the inside.
+      </p>
+      <div class="tags">
+        <span>Local LLMs</span>
+        <span>AI Pipelines</span>
+        <span>Automation</span>
+        <span>Game Dev</span>
+        <span>Python</span>
+        <span>Ollama</span>
+        <span>No Subscriptions</span>
+        <span>Privacy-First</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="projects">
+    <div class="section-inner">
+      <h2>Projects</h2>
+      <p class="section-sub">Things I've built — more coming soon.</p>
+
+      <div class="project-grid">
+
+        <div class="project-card">
+          <div class="project-icon">🤖</div>
+          <h3>Local AI — Up to 9B Parameters</h3>
+          <p>
+            Run powerful large language models like Llama 3, Mistral, and Phi-3
+            entirely on your own hardware. Includes model setup, API wrappers,
+            and automation hooks. Zero data leaves your machine.
+          </p>
+          <div class="project-tags">
+            <span>Ollama</span><span>Python</span><span>Local LLM</span><span>Privacy</span>
+          </div>
+          <!-- Uncomment when repo is ready:
+          <a href="https://github.com/amal-yadav/..." class="project-link" target="_blank">View on GitHub →</a>
+          -->
+        </div>
+
+        <div class="project-card project-coming">
+          <div class="project-icon">🎮</div>
+          <h3>Games</h3>
+          <p>Game projects coming soon. Stay tuned.</p>
+          <div class="project-tags">
+            <span>Game Dev</span>
+          </div>
+        </div>
+
+        <!-- Paste new project cards below this line -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="section-inner">
+      <h2>Work With Me</h2>
+      <p>
+        Want to set up local AI, automate a workflow, or discuss a project?
+        I'm available for freelance work. Let's build something together.
+      </p>
+      <div class="contact-methods">
+        <a href="mailto:amaniitd13@gmail.com" class="contact-btn">📧 amaniitd13@gmail.com</a>
+        <a href="https://github.com/amal-yadav" class="contact-btn" target="_blank">🐙 GitHub</a>
+      </div>
+      <p class="contact-note">Confidentiality guaranteed &nbsp;·&nbsp; Starting at $25 USD/hr</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Aman Singh &nbsp;·&nbsp; <a href="mailto:amaniitd13@gmail.com">amaniitd13@gmail.com</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
