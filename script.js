@@ -378,7 +378,8 @@ document.head.appendChild(style);
       submitBtn.textContent = 'Sent!';
       submitBtn.style.opacity = '1';
       setTimeout(() => { submitBtn.textContent = 'Sign the Guestbook'; }, 2000);
-    }).catch(() => {
+    }).catch((err) => {
+      console.error('Guestbook error:', err);
       submitBtn.textContent = 'Error — try again';
       submitBtn.style.opacity = '1';
       setTimeout(() => { submitBtn.textContent = 'Sign the Guestbook'; }, 2000);
