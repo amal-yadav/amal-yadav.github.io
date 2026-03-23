@@ -314,31 +314,29 @@ document.head.appendChild(style);
   }
 })();
 
-// ── Guestbook (localStorage, no sign-in) ──────────────
+// ── Firebase Guestbook (shared, no sign-in) ──────────
 (function () {
-  const STORAGE_KEY = 'guestbook_entries';
   const container = document.getElementById('guestbookEntries');
   const nameInput = document.getElementById('guestName');
   const msgInput = document.getElementById('guestMessage');
   const submitBtn = document.getElementById('guestSubmit');
   if (!container || !submitBtn) return;
 
-  // Pre-seeded entries that always show
-  const seeded = [
-    { name: 'Aman', text: 'Welcome to my guestbook! Leave a message and say hello.', date: '2026-03-01', pinned: true },
-  ];
+  // ── Firebase config ──
+  // Replace these values with your own from Firebase Console → Project Settings
+  const firebaseConfig = {
+    apiKey: "AIzaSyBhaIhN482xA8LYfGrBG425EmV_oqwcEcY",
+    authDomain: "amal-yadav.firebaseapp.com",
+    databaseURL: "https://amal-yadav-default-rtdb.firebaseio.com",
+    projectId: "amal-yadav",
+    storageBucket: "amal-yadav.firebasestorage.app",
+    messagingSenderId: "368033612643",
+    appId: "1:368033612643:web:4fd90954750233cb850956"
+  };
 
-  function loadEntries() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch {
-      return [];
-    }
-  }
-
-  function saveEntries(entries) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-  }
+  if (typeof firebase === 'undefined') return;
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database().ref('guestbook');
 
   function formatDate(dateStr) {
     const d = new Date(dateStr);
@@ -351,50 +349,68 @@ document.head.appendChild(style);
     return div.innerHTML;
   }
 
-  function renderEntries() {
-    const userEntries = loadEntries();
-    const all = [...seeded, ...userEntries];
+  function renderEntry(entry, pinned) {
+    const el = document.createElement('div');
+    el.className = 'guest-entry' + (pinned ? ' pinned' : '');
+    el.innerHTML =
+      '<div class="guest-header">' +
+        '<span class="guest-name">' + escapeHtml(entry.name) + '</span>' +
+        '<span class="guest-date">' + formatDate(entry.date) + '</span>' +
+      '</div>' +
+      '<p class="guest-text">' + escapeHtml(entry.text) + '</p>';
+    return el;
+  }
+
+  // Listen for real-time updates
+  db.orderByChild('date').on('value', (snapshot) => {
     container.innerHTML = '';
 
-    all.forEach(entry => {
-      const el = document.createElement('div');
-      el.className = 'guest-entry' + (entry.pinned ? ' pinned' : '');
-      el.innerHTML =
-        '<div class="guest-header">' +
-          '<span class="guest-name">' + escapeHtml(entry.name) + '</span>' +
-          '<span class="guest-date">' + formatDate(entry.date) + '</span>' +
-        '</div>' +
-        '<p class="guest-text">' + escapeHtml(entry.text) + '</p>';
-      container.appendChild(el);
+    // Pinned welcome message (always first)
+    container.appendChild(renderEntry(
+      { name: 'Aman', text: 'Welcome to my guestbook! Leave a message and say hello.', date: '2026-03-01' },
+      true
+    ));
+
+    // Firebase entries (newest first)
+    const entries = [];
+    snapshot.forEach(child => {
+      entries.push(child.val());
     });
-  }
+    entries.reverse().forEach(entry => {
+      container.appendChild(renderEntry(entry, false));
+    });
+  });
 
   submitBtn.addEventListener('click', () => {
     const name = nameInput.value.trim();
     const text = msgInput.value.trim();
     if (!name || !text) return;
 
-    const entries = loadEntries();
-    entries.push({
-      name: name,
-      text: text,
-      date: new Date().toISOString().split('T')[0],
-    });
-    saveEntries(entries);
+    // Rate limit: 1 message per 10 seconds
+    const lastPost = parseInt(localStorage.getItem('guestbook_last_post') || '0', 10);
+    if (Date.now() - lastPost < 10000) {
+      submitBtn.textContent = 'Wait a moment...';
+      setTimeout(() => { submitBtn.textContent = 'Sign the Guestbook'; }, 2000);
+      return;
+    }
 
+    db.push({
+      name: name.slice(0, 40),
+      text: text.slice(0, 280),
+      date: new Date().toISOString().split('T')[0],
+      timestamp: firebase.database.ServerValue.TIMESTAMP,
+    });
+
+    localStorage.setItem('guestbook_last_post', String(Date.now()));
     nameInput.value = '';
     msgInput.value = '';
-    renderEntries();
   });
 
-  // Allow Enter in the name field to move to message
   nameInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       msgInput.focus();
     }
   });
-
-  renderEntries();
 })();
 
