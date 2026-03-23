@@ -208,36 +208,62 @@ document.head.appendChild(style);
   });
 })();
 
-// ── Reaction Buttons (localStorage) ───────────────────
+// ── Reaction Buttons (Firebase shared + localStorage toggle) ──
 (function () {
   const buttons = document.querySelectorAll('.reaction-btn');
 
-  buttons.forEach(btn => {
-    const project = btn.getAttribute('data-project');
-    const key = 'reaction_' + project;
-    const liked = localStorage.getItem(key) === '1';
-    const countEl = btn.querySelector('.reaction-count');
+  function initReactions() {
+    if (typeof firebase === 'undefined') return;
 
-    if (liked) {
-      btn.classList.add('liked');
-      countEl.textContent = '1';
+    // Initialize Firebase early for reactions (guestbook section inits it later too, so guard)
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey: "AIzaSyBhaIhN482xA8LYfGrBG425EmV_oqwcEcY",
+        authDomain: "amal-yadav.firebaseapp.com",
+        databaseURL: "https://amal-yadav-default-rtdb.firebaseio.com",
+        projectId: "amal-yadav",
+        storageBucket: "amal-yadav.firebasestorage.app",
+        messagingSenderId: "368033612643",
+        appId: "1:368033612643:web:4fd90954750233cb850956"
+      });
     }
 
-    btn.addEventListener('click', () => {
-      const isLiked = btn.classList.contains('liked');
+    const reactionsRef = firebase.database().ref('reactions');
 
-      if (isLiked) {
-        btn.classList.remove('liked');
-        localStorage.removeItem(key);
-        countEl.textContent = '0';
-      } else {
-        btn.classList.add('liked', 'pop');
-        localStorage.setItem(key, '1');
-        countEl.textContent = '1';
-        setTimeout(() => btn.classList.remove('pop'), 300);
+    buttons.forEach(btn => {
+      const project = btn.getAttribute('data-project');
+      const localKey = 'reaction_' + project;
+      const countEl = btn.querySelector('.reaction-count');
+
+      // Listen for real-time count from Firebase
+      reactionsRef.child(project).on('value', (snapshot) => {
+        const count = snapshot.val() || 0;
+        countEl.textContent = count;
+      });
+
+      // Restore liked state from localStorage
+      if (localStorage.getItem(localKey) === '1') {
+        btn.classList.add('liked');
       }
+
+      btn.addEventListener('click', () => {
+        const isLiked = btn.classList.contains('liked');
+
+        if (isLiked) {
+          btn.classList.remove('liked');
+          localStorage.removeItem(localKey);
+          reactionsRef.child(project).transaction(count => Math.max((count || 0) - 1, 0));
+        } else {
+          btn.classList.add('liked', 'pop');
+          localStorage.setItem(localKey, '1');
+          reactionsRef.child(project).transaction(count => (count || 0) + 1);
+          setTimeout(() => btn.classList.remove('pop'), 300);
+        }
+      });
     });
-  });
+  }
+
+  initReactions();
 })();
 
 // ── Konami Code Easter Egg ────────────────────────────
@@ -319,22 +345,9 @@ document.head.appendChild(style);
   const nameInput = document.getElementById('guestName');
   const msgInput = document.getElementById('guestMessage');
   const submitBtn = document.getElementById('guestSubmit');
-  if (!container || !submitBtn) return;
+  if (!submitBtn) return;
 
-  // ── Firebase config ──
-  // Replace these values with your own from Firebase Console → Project Settings
-  const firebaseConfig = {
-    apiKey: "AIzaSyBhaIhN482xA8LYfGrBG425EmV_oqwcEcY",
-    authDomain: "amal-yadav.firebaseapp.com",
-    databaseURL: "https://amal-yadav-default-rtdb.firebaseio.com",
-    projectId: "amal-yadav",
-    storageBucket: "amal-yadav.firebasestorage.app",
-    messagingSenderId: "368033612643",
-    appId: "1:368033612643:web:4fd90954750233cb850956"
-  };
-
-  if (typeof firebase === 'undefined') return;
-  firebase.initializeApp(firebaseConfig);
+  if (typeof firebase === 'undefined' || !firebase.apps.length) return;
   const db = firebase.database().ref('guestbook');
 
   submitBtn.addEventListener('click', () => {
@@ -350,16 +363,26 @@ document.head.appendChild(style);
       return;
     }
 
+    submitBtn.textContent = 'Sending...';
+    submitBtn.style.opacity = '0.6';
+
     db.push({
       name: name.slice(0, 40),
       text: text.slice(0, 280),
       date: new Date().toISOString().split('T')[0],
       timestamp: firebase.database.ServerValue.TIMESTAMP,
+    }).then(() => {
+      localStorage.setItem('guestbook_last_post', String(Date.now()));
+      nameInput.value = '';
+      msgInput.value = '';
+      submitBtn.textContent = 'Sent!';
+      submitBtn.style.opacity = '1';
+      setTimeout(() => { submitBtn.textContent = 'Sign the Guestbook'; }, 2000);
+    }).catch(() => {
+      submitBtn.textContent = 'Error — try again';
+      submitBtn.style.opacity = '1';
+      setTimeout(() => { submitBtn.textContent = 'Sign the Guestbook'; }, 2000);
     });
-
-    localStorage.setItem('guestbook_last_post', String(Date.now()));
-    nameInput.value = '';
-    msgInput.value = '';
   });
 
   nameInput.addEventListener('keydown', (e) => {
