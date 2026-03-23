@@ -316,7 +316,6 @@ document.head.appendChild(style);
 
 // ── Firebase Guestbook (shared, no sign-in) ──────────
 (function () {
-  const container = document.getElementById('guestbookEntries');
   const nameInput = document.getElementById('guestName');
   const msgInput = document.getElementById('guestMessage');
   const submitBtn = document.getElementById('guestSubmit');
@@ -337,49 +336,6 @@ document.head.appendChild(style);
   if (typeof firebase === 'undefined') return;
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database().ref('guestbook');
-
-  function formatDate(dateStr) {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  function renderEntry(entry, pinned) {
-    const el = document.createElement('div');
-    el.className = 'guest-entry' + (pinned ? ' pinned' : '');
-    el.innerHTML =
-      '<div class="guest-header">' +
-        '<span class="guest-name">' + escapeHtml(entry.name) + '</span>' +
-        '<span class="guest-date">' + formatDate(entry.date) + '</span>' +
-      '</div>' +
-      '<p class="guest-text">' + escapeHtml(entry.text) + '</p>';
-    return el;
-  }
-
-  // Listen for real-time updates
-  db.orderByChild('date').on('value', (snapshot) => {
-    container.innerHTML = '';
-
-    // Pinned welcome message (always first)
-    container.appendChild(renderEntry(
-      { name: 'Aman', text: 'Welcome to my guestbook! Leave a message and say hello.', date: '2026-03-01' },
-      true
-    ));
-
-    // Firebase entries (newest first)
-    const entries = [];
-    snapshot.forEach(child => {
-      entries.push(child.val());
-    });
-    entries.reverse().forEach(entry => {
-      container.appendChild(renderEntry(entry, false));
-    });
-  });
 
   submitBtn.addEventListener('click', () => {
     const name = nameInput.value.trim();

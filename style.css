@@ -669,52 +669,6 @@ h2 {
   opacity: 0.5;
 }
 
-.guestbook-entries {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.guest-entry {
-  padding: 1.2rem 1.4rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  animation: guestFadeIn 0.4s ease;
-}
-
-.guest-entry.pinned {
-  border-left: 3px solid var(--accent);
-}
-
-@keyframes guestFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.guest-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-}
-
-.guest-name {
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.guest-date {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-.guest-text {
-  color: var(--text-muted);
-  font-size: 0.92rem;
-  line-height: 1.6;
-}
 
 
 /* ── FOOTER ─────────────────────────────────────────── */
