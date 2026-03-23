@@ -103,6 +103,23 @@ nav ul a:hover { color: var(--text); }
 
 .theme-toggle:hover { background: var(--bg-card-hover); }
 
+/* ── LANGUAGE TOGGLE ───────────────────────────────── */
+.lang-toggle {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-muted);
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.04em;
+}
+
+.lang-toggle:hover { background: var(--bg-card-hover); color: var(--text); }
+
 [data-theme="dark"] .icon-sun  { display: none; }
 [data-theme="dark"] .icon-moon { display: inline; }
 [data-theme="light"] .icon-sun  { display: inline; }

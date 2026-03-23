@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aman Singh — AI Automation Engineer</title>
+  <title>Amal Yadav — AI Automation Engineer</title>
 
   <!-- Security headers -->
   <meta http-equiv="Content-Security-Policy" content="
@@ -21,7 +21,7 @@
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
 
   <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="Aman Singh — Blog" href="rss.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Amal Yadav — Blog" href="rss.xml" />
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="style.css" />
@@ -37,15 +37,16 @@
 
   <!-- NAV -->
   <nav>
-    <span class="nav-logo">aman<span class="accent">.</span>dev</span>
+    <span class="nav-logo">amal<span class="accent">.</span>dev</span>
     <div class="nav-right">
       <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#music">Music</a></li>
-        <li><a href="#blog">Blog</a></li>
-        <li><a href="#guestbook">Guestbook</a></li>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+        <li><a href="#music" data-i18n="nav.music">Music</a></li>
+        <li><a href="#blog" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="#guestbook" data-i18n="nav.guestbook">Guestbook</a></li>
       </ul>
+      <button class="lang-toggle" id="langToggle" aria-label="Toggle language">EN</button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <span class="icon-sun">☀️</span>
         <span class="icon-moon">🌙</span>
@@ -56,15 +57,15 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <p class="hero-tag">AI Automation Engineer</p>
-      <h1>Hi, I'm <span class="accent">Aman Singh</span>.<br />I make AI run<br />on <span class="accent">your machine.</span></h1>
-      <p class="hero-sub">
+      <p class="hero-tag" data-i18n="hero.tag">AI Automation Engineer</p>
+      <h1 data-i18n-html="hero.heading">Hi, I'm <span class="accent">Amal Yadav</span>.<br />I make AI run<br />on <span class="accent">your machine.</span></h1>
+      <p class="hero-sub" data-i18n="hero.sub">
         Local AI models up to 9 billion parameters. Custom automation pipelines.
         No cloud. No subscriptions. Everything on your own PC.
       </p>
       <div class="hero-actions">
-        <a href="#projects" class="btn-primary">View Projects</a>
-        <a href="#contact" class="btn-secondary">Hire Me</a>
+        <a href="#projects" class="btn-primary" data-i18n="hero.cta1">View Projects</a>
+        <a href="#guestbook" class="btn-secondary" data-i18n="hero.cta2">Say Hello</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -77,13 +78,13 @@
         <div class="terminal-body" id="terminalBody">
           <div class="terminal-output" id="terminalOutput">
             <p><span class="t-dim">~$</span> ollama run llama3:9b</p>
-            <p><span class="t-green">✔</span> Model loaded locally</p>
+            <p><span class="t-green">✔</span> <span data-i18n="terminal.loaded">Model loaded locally</span></p>
             <p><span class="t-dim">~$</span> python automate.py</p>
-            <p><span class="t-green">✔</span> Pipeline running...</p>
+            <p><span class="t-green">✔</span> <span data-i18n="terminal.running">Pipeline running...</span></p>
           </div>
           <div class="terminal-input-line">
             <span class="t-dim">~$</span>
-            <input type="text" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="type 'help'" aria-label="Terminal input" />
+            <input type="text" id="terminalInput" autocomplete="off" spellcheck="false" data-i18n-placeholder="terminal.placeholder" placeholder="type 'help'" aria-label="Terminal input" />
           </div>
         </div>
       </div>
@@ -93,13 +94,13 @@
   <!-- ABOUT -->
   <section id="about" class="about">
     <div class="section-inner">
-      <h2>About Me</h2>
-      <p>
+      <h2 data-i18n="about.title">About Me</h2>
+      <p data-i18n-html="about.p1">
         I'm an AI Automation Engineer who believes powerful AI shouldn't need a cloud subscription.
         I specialise in running large language models locally — up to <strong>9 billion parameters</strong> —
         and wiring them into automation pipelines tailored to your workflow.
       </p>
-      <p>
+      <p data-i18n="about.p2">
         Outside of engineering, I write song lyrics and compose music — and I'm an avid gamer
         (Pokemon Unite main). Whether it's AI, music, or gaming, I love building things that feel
         like magic from the outside but are clean craft on the inside.
@@ -107,15 +108,15 @@
       <div class="tags">
         <span>Local LLMs</span>
         <span>AI Pipelines</span>
-        <span>Automation</span>
+        <span data-i18n="tag.automation">Automation</span>
         <span>Game Dev</span>
         <span>Python</span>
         <span>Ollama</span>
-        <span>Songwriting</span>
-        <span>Music Composition</span>
+        <span data-i18n="tag.songwriting">Songwriting</span>
+        <span data-i18n="tag.composition">Music Composition</span>
         <span>Pokemon Unite</span>
-        <span>No Subscriptions</span>
-        <span>Privacy-First</span>
+        <span data-i18n="tag.nosubs">No Subscriptions</span>
+        <span data-i18n="tag.privacy">Privacy-First</span>
       </div>
     </div>
   </section>
@@ -123,35 +124,35 @@
   <!-- NOW -->
   <section id="now" class="now">
     <div class="section-inner">
-      <h2>Now</h2>
-      <p class="now-updated">Updated March 2026</p>
+      <h2 data-i18n="now.title">Now</h2>
+      <p class="now-updated" data-i18n="now.updated">Updated March 2026</p>
       <div class="now-grid">
         <div class="now-item">
           <span class="now-icon">🤖</span>
           <div>
-            <strong>Building local AI pipelines</strong>
-            <p>Experimenting with Llama 3 and Phi-3 for on-device automation workflows.</p>
+            <strong data-i18n="now.ai.title">Building local AI pipelines</strong>
+            <p data-i18n="now.ai.desc">Experimenting with Llama 3 and Phi-3 for on-device automation workflows.</p>
           </div>
         </div>
         <div class="now-item">
           <span class="now-icon">📓</span>
           <div>
-            <strong>Developing AI Journal</strong>
-            <p>Adding reflection prompts and mood tracking to the journaling app.</p>
+            <strong data-i18n="now.journal.title">Developing AI Journal</strong>
+            <p data-i18n="now.journal.desc">Adding reflection prompts and mood tracking to the journaling app.</p>
           </div>
         </div>
         <div class="now-item">
           <span class="now-icon">🎵</span>
           <div>
-            <strong>Composing new music</strong>
-            <p>Working on original tracks — lyrics and melodies in progress.</p>
+            <strong data-i18n="now.music.title">Composing new music</strong>
+            <p data-i18n="now.music.desc">Working on original tracks — lyrics and melodies in progress.</p>
           </div>
         </div>
         <div class="now-item">
           <span class="now-icon">🎮</span>
           <div>
-            <strong>Grinding Pokemon Unite</strong>
-            <p>Climbing ranked and trying out new team strategies.</p>
+            <strong data-i18n="now.gaming.title">Grinding Pokemon Unite</strong>
+            <p data-i18n="now.gaming.desc">Climbing ranked and trying out new team strategies.</p>
           </div>
         </div>
       </div>
@@ -161,21 +162,21 @@
   <!-- PROJECTS -->
   <section id="projects" class="projects">
     <div class="section-inner">
-      <h2>Projects</h2>
-      <p class="section-sub">Things I've built — more coming soon.</p>
+      <h2 data-i18n="projects.title">Projects</h2>
+      <p class="section-sub" data-i18n="projects.sub">Things I've built — more coming soon.</p>
 
       <div class="project-grid">
 
         <div class="project-card" data-project="local-ai">
           <div class="project-icon">🤖</div>
-          <h3>Local AI — Up to 9B Parameters</h3>
-          <p>
+          <h3 data-i18n="projects.ai.title">Local AI — Up to 9B Parameters</h3>
+          <p data-i18n="projects.ai.desc">
             Run powerful large language models like Llama 3, Mistral, and Phi-3
             entirely on your own hardware. Includes model setup, API wrappers,
             and automation hooks. Zero data leaves your machine.
           </p>
           <div class="project-tags">
-            <span>Ollama</span><span>Python</span><span>Local LLM</span><span>Privacy</span>
+            <span>Ollama</span><span>Python</span><span>Local LLM</span><span data-i18n="tag.privacy">Privacy</span>
           </div>
           <button class="reaction-btn" data-project="local-ai" aria-label="Like this project">
             <span class="reaction-heart">♥</span>
@@ -185,14 +186,14 @@
 
         <div class="project-card" data-project="ai-journal">
           <div class="project-icon">📓</div>
-          <h3>AI Journal</h3>
-          <p>
+          <h3 data-i18n="projects.journal.title">AI Journal</h3>
+          <p data-i18n="projects.journal.desc">
             A journaling app powered by AI to help you capture and organise your thoughts.
             Write freely — the AI helps you reflect, expand, and find clarity in what you've
             written.
           </p>
           <div class="project-tags">
-            <span>AI</span><span>Journaling</span><span>Writing</span><span>Local LLM</span>
+            <span>AI</span><span data-i18n="tag.journaling">Journaling</span><span data-i18n="tag.writing">Writing</span><span>Local LLM</span>
           </div>
           <button class="reaction-btn" data-project="ai-journal" aria-label="Like this project">
             <span class="reaction-heart">♥</span>
@@ -203,13 +204,13 @@
         <div class="project-card" data-project="pokemon-unite">
           <div class="project-icon">🎮</div>
           <h3>Pokemon Unite</h3>
-          <p>
+          <p data-i18n="projects.pokemon.desc">
             Avid Pokemon Unite player — I study team composition, objective timing,
             and lane strategy. Gaming sharpens the same pattern-recognition and
             decision-making skills I use in engineering.
           </p>
           <div class="project-tags">
-            <span>Pokemon Unite</span><span>Strategy</span><span>MOBA</span><span>Gaming</span>
+            <span>Pokemon Unite</span><span data-i18n="tag.strategy">Strategy</span><span>MOBA</span><span>Gaming</span>
           </div>
           <button class="reaction-btn" data-project="pokemon-unite" aria-label="Like this project">
             <span class="reaction-heart">♥</span>
@@ -224,8 +225,8 @@
   <!-- MUSIC -->
   <section id="music" class="music">
     <div class="section-inner">
-      <h2>Music</h2>
-      <p>
+      <h2 data-i18n="music.title">Music</h2>
+      <p data-i18n="music.desc">
         I write lyrics and compose original music. Songwriting is where I combine
         storytelling with emotion — it's the other side of the same creative coin as building software.
       </p>
@@ -240,30 +241,30 @@
             <span class="eq-bar"></span>
             <span class="eq-bar"></span>
           </div>
-          <span class="player-label">Tracks</span>
+          <span class="player-label" data-i18n="music.tracks">Tracks</span>
         </div>
         <div class="track-list">
           <a href="https://www.youtube.com/channel/UCjFbe-AAd9o6lfgexZM20Yw" class="track" target="_blank" rel="noopener noreferrer">
             <span class="track-play">▶</span>
             <span class="track-info">
-              <span class="track-title">Original Compositions</span>
-              <span class="track-artist">Aman Singh</span>
+              <span class="track-title" data-i18n="music.t1">Original Compositions</span>
+              <span class="track-artist">Amal Yadav</span>
             </span>
             <span class="track-badge">YouTube</span>
           </a>
           <a href="https://www.youtube.com/channel/UCjFbe-AAd9o6lfgexZM20Yw" class="track" target="_blank" rel="noopener noreferrer">
             <span class="track-play">▶</span>
             <span class="track-info">
-              <span class="track-title">Songwriting Sessions</span>
-              <span class="track-artist">Aman Singh</span>
+              <span class="track-title" data-i18n="music.t2">Songwriting Sessions</span>
+              <span class="track-artist">Amal Yadav</span>
             </span>
             <span class="track-badge">YouTube</span>
           </a>
           <a href="https://www.youtube.com/channel/UCjFbe-AAd9o6lfgexZM20Yw" class="track" target="_blank" rel="noopener noreferrer">
             <span class="track-play">▶</span>
             <span class="track-info">
-              <span class="track-title">Lyrics &amp; Melodies</span>
-              <span class="track-artist">Aman Singh</span>
+              <span class="track-title" data-i18n="music.t3">Lyrics &amp; Melodies</span>
+              <span class="track-artist">Amal Yadav</span>
             </span>
             <span class="track-badge">YouTube</span>
           </a>
@@ -274,13 +275,14 @@
         <a href="https://www.youtube.com/channel/UCjFbe-AAd9o6lfgexZM20Yw"
            class="btn-primary"
            target="_blank"
-           rel="noopener noreferrer">▶ Listen on YouTube</a>
+           rel="noopener noreferrer"
+           data-i18n="music.cta">▶ Listen on YouTube</a>
       </div>
       <div class="tags">
-        <span>Songwriting</span>
-        <span>Lyrics</span>
-        <span>Music Composition</span>
-        <span>Original Music</span>
+        <span data-i18n="tag.songwriting">Songwriting</span>
+        <span data-i18n="tag.lyrics">Lyrics</span>
+        <span data-i18n="tag.composition">Music Composition</span>
+        <span data-i18n="tag.original">Original Music</span>
       </div>
     </div>
   </section>
@@ -289,14 +291,14 @@
   <section id="blog" class="blog">
     <div class="section-inner">
       <h2>Blog</h2>
-      <p class="section-sub">Thoughts on AI, music, gaming, and building things.</p>
+      <p class="section-sub" data-i18n="blog.sub">Thoughts on AI, music, gaming, and building things.</p>
 
       <div class="blog-grid">
 
         <article class="blog-post">
-          <time class="blog-date">March 2026</time>
-          <h3>Running Llama 3 Locally on a Budget PC</h3>
-          <p>
+          <time class="blog-date" data-i18n="blog.date1">March 2026</time>
+          <h3 data-i18n="blog.post1.title">Running Llama 3 Locally on a Budget PC</h3>
+          <p data-i18n="blog.post1.body">
             You don't need a $3,000 GPU to run a 9-billion parameter model. I've been testing
             Llama 3 on mid-range hardware with Ollama and the results are surprisingly usable.
             Quantisation is the key — a Q4 model fits in 6 GB of RAM and still produces
@@ -309,30 +311,30 @@
         </article>
 
         <article class="blog-post">
-          <time class="blog-date">February 2026</time>
-          <h3>Why I Built an AI Journal</h3>
-          <p>
+          <time class="blog-date" data-i18n="blog.date2">February 2026</time>
+          <h3 data-i18n="blog.post2.title">Why I Built an AI Journal</h3>
+          <p data-i18n="blog.post2.body">
             Journaling has always helped me think clearly, but I wanted something that could
             help me go deeper. That's why I built AI Journal — an app where the AI doesn't
             write for you, it helps you reflect on what you've already written. Think of it
             as a thinking partner that asks the right questions.
           </p>
           <div class="blog-tags">
-            <span>AI Journal</span><span>Writing</span><span>Productivity</span>
+            <span>AI Journal</span><span data-i18n="tag.writing">Writing</span><span data-i18n="tag.productivity">Productivity</span>
           </div>
         </article>
 
         <article class="blog-post">
-          <time class="blog-date">January 2026</time>
-          <h3>What Pokemon Unite Taught Me About Strategy</h3>
-          <p>
+          <time class="blog-date" data-i18n="blog.date3">January 2026</time>
+          <h3 data-i18n="blog.post3.title">What Pokemon Unite Taught Me About Strategy</h3>
+          <p data-i18n="blog.post3.body">
             MOBAs are essentially real-time decision engines. Every match in Pokemon Unite
             is a series of trade-offs: push a lane or contest an objective? Farm or fight?
             The same mental models apply to engineering — resource allocation, risk assessment,
             and knowing when to commit. Gaming makes me a better builder.
           </p>
           <div class="blog-tags">
-            <span>Gaming</span><span>Pokemon Unite</span><span>Strategy</span>
+            <span>Gaming</span><span>Pokemon Unite</span><span data-i18n="tag.strategy">Strategy</span>
           </div>
         </article>
 
@@ -343,13 +345,13 @@
   <!-- GUESTBOOK -->
   <section id="guestbook" class="guestbook">
     <div class="section-inner">
-      <h2>Guestbook</h2>
-      <p class="section-sub">Leave a message, say hello, or share your thoughts.</p>
+      <h2 data-i18n="guestbook.title">Guestbook</h2>
+      <p class="section-sub" data-i18n="guestbook.sub">Leave a message, say hello, or share your thoughts.</p>
 
       <div class="guestbook-form">
-        <input type="text" id="guestName" placeholder="Your name" maxlength="40" aria-label="Your name" />
-        <textarea id="guestMessage" placeholder="Leave a message..." maxlength="280" rows="3" aria-label="Your message"></textarea>
-        <button class="btn-primary" id="guestSubmit">Sign the Guestbook</button>
+        <input type="text" id="guestName" data-i18n-placeholder="guestbook.name" placeholder="Your name" maxlength="40" aria-label="Your name" />
+        <textarea id="guestMessage" data-i18n-placeholder="guestbook.message" placeholder="Leave a message..." maxlength="280" rows="3" aria-label="Your message"></textarea>
+        <button class="btn-primary" id="guestSubmit" data-i18n="guestbook.submit">Sign the Guestbook</button>
       </div>
     </div>
   </section>
@@ -357,7 +359,7 @@
   <!-- FOOTER -->
   <footer>
     <p>
-      © 2026 Aman Singh &nbsp;·&nbsp;
+      © 2026 Amal Yadav &nbsp;·&nbsp;
       <a href="rss.xml" class="rss-link" title="RSS Feed">RSS</a>
     </p>
   </footer>
