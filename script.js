@@ -208,62 +208,78 @@ document.head.appendChild(style);
   });
 })();
 
-// ── Reaction Buttons (Firebase shared + localStorage toggle) ──
+// ── Firebase REST helpers ─────────────────────────────
+const FIREBASE_DB = 'https://amal-yadav-default-rtdb.firebaseio.com';
+
+function fbGet(path) {
+  return fetch(FIREBASE_DB + '/' + path + '.json').then(r => r.json());
+}
+
+function fbSet(path, data) {
+  return fetch(FIREBASE_DB + '/' + path + '.json', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  }).then(r => r.json());
+}
+
+function fbPush(path, data) {
+  return fetch(FIREBASE_DB + '/' + path + '.json', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  }).then(r => r.json());
+}
+
+// ── Reaction Buttons (Firebase REST + localStorage toggle) ──
 (function () {
   const buttons = document.querySelectorAll('.reaction-btn');
 
-  function initReactions() {
-    if (typeof firebase === 'undefined') return;
-
-    // Initialize Firebase early for reactions (guestbook section inits it later too, so guard)
-    if (!firebase.apps.length) {
-      firebase.initializeApp({
-        apiKey: "AIzaSyBhaIhN482xA8LYfGrBG425EmV_oqwcEcY",
-        authDomain: "amal-yadav.firebaseapp.com",
-        databaseURL: "https://amal-yadav-default-rtdb.firebaseio.com",
-        projectId: "amal-yadav",
-        storageBucket: "amal-yadav.firebasestorage.app",
-        messagingSenderId: "368033612643",
-        appId: "1:368033612643:web:4fd90954750233cb850956"
-      });
-    }
-
-    const reactionsRef = firebase.database().ref('reactions');
-
+  // Load all reaction counts on page load
+  fbGet('reactions').then(data => {
     buttons.forEach(btn => {
       const project = btn.getAttribute('data-project');
-      const localKey = 'reaction_' + project;
       const countEl = btn.querySelector('.reaction-count');
-
-      // Listen for real-time count from Firebase
-      reactionsRef.child(project).on('value', (snapshot) => {
-        const count = snapshot.val() || 0;
-        countEl.textContent = count;
-      });
-
-      // Restore liked state from localStorage
-      if (localStorage.getItem(localKey) === '1') {
-        btn.classList.add('liked');
-      }
-
-      btn.addEventListener('click', () => {
-        const isLiked = btn.classList.contains('liked');
-
-        if (isLiked) {
-          btn.classList.remove('liked');
-          localStorage.removeItem(localKey);
-          reactionsRef.child(project).transaction(count => Math.max((count || 0) - 1, 0));
-        } else {
-          btn.classList.add('liked', 'pop');
-          localStorage.setItem(localKey, '1');
-          reactionsRef.child(project).transaction(count => (count || 0) + 1);
-          setTimeout(() => btn.classList.remove('pop'), 300);
-        }
-      });
+      const count = (data && data[project]) || 0;
+      countEl.textContent = count;
     });
-  }
+  }).catch(() => {});
 
-  initReactions();
+  buttons.forEach(btn => {
+    const project = btn.getAttribute('data-project');
+    const localKey = 'reaction_' + project;
+    const countEl = btn.querySelector('.reaction-count');
+
+    // Restore liked state from localStorage
+    if (localStorage.getItem(localKey) === '1') {
+      btn.classList.add('liked');
+    }
+
+    btn.addEventListener('click', () => {
+      const isLiked = btn.classList.contains('liked');
+
+      if (isLiked) {
+        btn.classList.remove('liked');
+        localStorage.removeItem(localKey);
+        // Decrement in Firebase
+        fbGet('reactions/' + project).then(count => {
+          return fbSet('reactions/' + project, Math.max((count || 0) - 1, 0));
+        }).then(newCount => {
+          countEl.textContent = newCount;
+        });
+      } else {
+        btn.classList.add('liked', 'pop');
+        localStorage.setItem(localKey, '1');
+        // Increment in Firebase
+        fbGet('reactions/' + project).then(count => {
+          return fbSet('reactions/' + project, (count || 0) + 1);
+        }).then(newCount => {
+          countEl.textContent = newCount;
+        });
+        setTimeout(() => btn.classList.remove('pop'), 300);
+      }
+    });
+  });
 })();
 
 // ── Konami Code Easter Egg ────────────────────────────
@@ -340,15 +356,12 @@ document.head.appendChild(style);
   }
 })();
 
-// ── Firebase Guestbook (shared, no sign-in) ──────────
+// ── Firebase Guestbook (REST API, no sign-in) ────────
 (function () {
   const nameInput = document.getElementById('guestName');
   const msgInput = document.getElementById('guestMessage');
   const submitBtn = document.getElementById('guestSubmit');
   if (!submitBtn) return;
-
-  if (typeof firebase === 'undefined' || !firebase.apps.length) return;
-  const db = firebase.database().ref('guestbook');
 
   submitBtn.addEventListener('click', () => {
     const name = nameInput.value.trim();
@@ -366,18 +379,22 @@ document.head.appendChild(style);
     submitBtn.textContent = 'Sending...';
     submitBtn.style.opacity = '0.6';
 
-    db.push({
+    fbPush('guestbook', {
       name: name.slice(0, 40),
       text: text.slice(0, 280),
       date: new Date().toISOString().split('T')[0],
-      timestamp: firebase.database.ServerValue.TIMESTAMP,
-    }).then(() => {
-      localStorage.setItem('guestbook_last_post', String(Date.now()));
-      nameInput.value = '';
-      msgInput.value = '';
-      submitBtn.textContent = 'Sent!';
-      submitBtn.style.opacity = '1';
-      setTimeout(() => { submitBtn.textContent = 'Sign the Guestbook'; }, 2000);
+      timestamp: Date.now(),
+    }).then((res) => {
+      if (res && res.name) {
+        localStorage.setItem('guestbook_last_post', String(Date.now()));
+        nameInput.value = '';
+        msgInput.value = '';
+        submitBtn.textContent = 'Sent!';
+        submitBtn.style.opacity = '1';
+        setTimeout(() => { submitBtn.textContent = 'Sign the Guestbook'; }, 2000);
+      } else {
+        throw new Error('No key returned');
+      }
     }).catch((err) => {
       console.error('Guestbook error:', err);
       submitBtn.textContent = 'Error — try again';

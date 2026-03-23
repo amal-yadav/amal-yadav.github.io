@@ -8,11 +8,11 @@
   <!-- Security headers -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'none';
-    script-src 'self' https://cloud.umami.is https://www.gstatic.com;
+    script-src 'self' https://cloud.umami.is;
     style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
     font-src https://fonts.gstatic.com;
     img-src 'self' data:;
-    connect-src 'self' https://cloud.umami.is https://gateway.umami.is https://eu.umami.is https://api-gateway.umami.dev https://api-gateway-eu.umami.dev https://*.firebaseio.com wss://*.firebaseio.com https://*.googleapis.com https://www.gstatic.com;
+    connect-src 'self' https://cloud.umami.is https://gateway.umami.is https://eu.umami.is https://api-gateway.umami.dev https://api-gateway-eu.umami.dev https://amal-yadav-default-rtdb.firebaseio.com;
     base-uri 'self';
     form-action 'none';
   " />
@@ -361,10 +361,6 @@
       <a href="rss.xml" class="rss-link" title="RSS Feed">RSS</a>
     </p>
   </footer>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
   <script src="script.js"></script>
 </body>
