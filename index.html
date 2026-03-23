@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aman Singh — AI Automation Engineer</title>
 
-  <!-- Security headers (meta tags — GitHub Pages doesn't allow HTTP headers) -->
+  <!-- Security headers -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'none';
     script-src 'self' https://cloud.umami.is;
@@ -20,6 +20,9 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
 
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Aman Singh — Blog" href="rss.xml" />
+
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="style.css" />
   <script defer src="https://cloud.umami.is/script.js" data-website-id="efac4a14-c666-4147-92e6-efcdf594c1bc"></script>
@@ -29,6 +32,9 @@
 </head>
 <body>
 
+  <!-- CONFETTI CANVAS (easter egg) -->
+  <canvas id="confettiCanvas"></canvas>
+
   <!-- NAV -->
   <nav>
     <span class="nav-logo">aman<span class="accent">.</span>dev</span>
@@ -37,7 +43,8 @@
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#music">Music</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#guestbook">Guestbook</a></li>
       </ul>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <span class="icon-sun">☀️</span>
@@ -67,12 +74,17 @@
           <span class="dot yellow"></span>
           <span class="dot green"></span>
         </div>
-        <div class="terminal-body">
-          <p><span class="t-dim">~$</span> ollama run llama3:9b</p>
-          <p><span class="t-green">✔</span> Model loaded locally</p>
-          <p><span class="t-dim">~$</span> python automate.py</p>
-          <p><span class="t-green">✔</span> Pipeline running...</p>
-          <p><span class="t-dim">~$</span> <span class="t-cursor">█</span></p>
+        <div class="terminal-body" id="terminalBody">
+          <div class="terminal-output" id="terminalOutput">
+            <p><span class="t-dim">~$</span> ollama run llama3:9b</p>
+            <p><span class="t-green">✔</span> Model loaded locally</p>
+            <p><span class="t-dim">~$</span> python automate.py</p>
+            <p><span class="t-green">✔</span> Pipeline running...</p>
+          </div>
+          <div class="terminal-input-line">
+            <span class="t-dim">~$</span>
+            <input type="text" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="type 'help'" aria-label="Terminal input" />
+          </div>
         </div>
       </div>
     </div>
@@ -88,8 +100,8 @@
         and wiring them into automation pipelines tailored to your workflow.
       </p>
       <p>
-        Outside of engineering, I write song lyrics and compose music — and build games as a
-        creative outlet. Whether it's AI, music, or game dev, I love building things that feel
+        Outside of engineering, I write song lyrics and compose music — and I'm an avid gamer
+        (Pokemon Unite main). Whether it's AI, music, or gaming, I love building things that feel
         like magic from the outside but are clean craft on the inside.
       </p>
       <div class="tags">
@@ -101,8 +113,47 @@
         <span>Ollama</span>
         <span>Songwriting</span>
         <span>Music Composition</span>
+        <span>Pokemon Unite</span>
         <span>No Subscriptions</span>
         <span>Privacy-First</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOW -->
+  <section id="now" class="now">
+    <div class="section-inner">
+      <h2>Now</h2>
+      <p class="now-updated">Updated March 2026</p>
+      <div class="now-grid">
+        <div class="now-item">
+          <span class="now-icon">🤖</span>
+          <div>
+            <strong>Building local AI pipelines</strong>
+            <p>Experimenting with Llama 3 and Phi-3 for on-device automation workflows.</p>
+          </div>
+        </div>
+        <div class="now-item">
+          <span class="now-icon">📓</span>
+          <div>
+            <strong>Developing AI Journal</strong>
+            <p>Adding reflection prompts and mood tracking to the journaling app.</p>
+          </div>
+        </div>
+        <div class="now-item">
+          <span class="now-icon">🎵</span>
+          <div>
+            <strong>Composing new music</strong>
+            <p>Working on original tracks — lyrics and melodies in progress.</p>
+          </div>
+        </div>
+        <div class="now-item">
+          <span class="now-icon">🎮</span>
+          <div>
+            <strong>Grinding Pokemon Unite</strong>
+            <p>Climbing ranked and trying out new team strategies.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -115,7 +166,7 @@
 
       <div class="project-grid">
 
-        <div class="project-card">
+        <div class="project-card" data-project="local-ai">
           <div class="project-icon">🤖</div>
           <h3>Local AI — Up to 9B Parameters</h3>
           <p>
@@ -126,12 +177,13 @@
           <div class="project-tags">
             <span>Ollama</span><span>Python</span><span>Local LLM</span><span>Privacy</span>
           </div>
-          <!-- Uncomment when repo is ready:
-          <a href="https://github.com/amal-yadav/..." class="project-link" target="_blank">View on GitHub →</a>
-          -->
+          <button class="reaction-btn" data-project="local-ai" aria-label="Like this project">
+            <span class="reaction-heart">♥</span>
+            <span class="reaction-count">0</span>
+          </button>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" data-project="ai-journal">
           <div class="project-icon">📓</div>
           <h3>AI Journal</h3>
           <p>
@@ -142,18 +194,28 @@
           <div class="project-tags">
             <span>AI</span><span>Journaling</span><span>Writing</span><span>Local LLM</span>
           </div>
+          <button class="reaction-btn" data-project="ai-journal" aria-label="Like this project">
+            <span class="reaction-heart">♥</span>
+            <span class="reaction-count">0</span>
+          </button>
         </div>
 
-        <div class="project-card project-coming">
+        <div class="project-card" data-project="pokemon-unite">
           <div class="project-icon">🎮</div>
-          <h3>Games</h3>
-          <p>Game projects coming soon. Stay tuned.</p>
+          <h3>Pokemon Unite</h3>
+          <p>
+            Avid Pokemon Unite player — I study team composition, objective timing,
+            and lane strategy. Gaming sharpens the same pattern-recognition and
+            decision-making skills I use in engineering.
+          </p>
           <div class="project-tags">
-            <span>Game Dev</span>
+            <span>Pokemon Unite</span><span>Strategy</span><span>MOBA</span><span>Gaming</span>
           </div>
+          <button class="reaction-btn" data-project="pokemon-unite" aria-label="Like this project">
+            <span class="reaction-heart">♥</span>
+            <span class="reaction-count">0</span>
+          </button>
         </div>
-
-        <!-- Paste new project cards below this line -->
 
       </div>
     </div>
@@ -167,9 +229,47 @@
         I write lyrics and compose original music. Songwriting is where I combine
         storytelling with emotion — it's the other side of the same creative coin as building software.
       </p>
-      <p>
-        All my published tracks are on YouTube. Have a listen.
-      </p>
+
+      <!-- Music Player -->
+      <div class="music-player">
+        <div class="player-header">
+          <div class="equalizer">
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+          </div>
+          <span class="player-label">Tracks</span>
+        </div>
+        <div class="track-list">
+          <a href="https://www.youtube.com/channel/UCjFbe-AAd9o6lfgexZM20Yw" class="track" target="_blank" rel="noopener noreferrer">
+            <span class="track-play">▶</span>
+            <span class="track-info">
+              <span class="track-title">Original Compositions</span>
+              <span class="track-artist">Aman Singh</span>
+            </span>
+            <span class="track-badge">YouTube</span>
+          </a>
+          <a href="https://www.youtube.com/channel/UCjFbe-AAd9o6lfgexZM20Yw" class="track" target="_blank" rel="noopener noreferrer">
+            <span class="track-play">▶</span>
+            <span class="track-info">
+              <span class="track-title">Songwriting Sessions</span>
+              <span class="track-artist">Aman Singh</span>
+            </span>
+            <span class="track-badge">YouTube</span>
+          </a>
+          <a href="https://www.youtube.com/channel/UCjFbe-AAd9o6lfgexZM20Yw" class="track" target="_blank" rel="noopener noreferrer">
+            <span class="track-play">▶</span>
+            <span class="track-info">
+              <span class="track-title">Lyrics &amp; Melodies</span>
+              <span class="track-artist">Aman Singh</span>
+            </span>
+            <span class="track-badge">YouTube</span>
+          </a>
+        </div>
+      </div>
+
       <div class="music-cta">
         <a href="https://www.youtube.com/channel/UCjFbe-AAd9o6lfgexZM20Yw"
            class="btn-primary"
@@ -185,25 +285,82 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="contact">
+  <!-- BLOG -->
+  <section id="blog" class="blog">
     <div class="section-inner">
-      <h2>Work With Me</h2>
-      <p>
-        Want to set up local AI, automate a workflow, or discuss a project?
-        I'm available for freelance work. Let's build something together.
-      </p>
-      <div class="contact-methods">
-        <a href="#" class="contact-btn" id="emailBtn" data-u="amaniitd13" data-d="gmail.com">📧 <span id="emailText">Enable JS to see email</span></a>
-        <a href="https://github.com/amal-yadav" class="contact-btn" target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
+      <h2>Blog</h2>
+      <p class="section-sub">Thoughts on AI, music, gaming, and building things.</p>
+
+      <div class="blog-grid">
+
+        <article class="blog-post">
+          <time class="blog-date">March 2026</time>
+          <h3>Running Llama 3 Locally on a Budget PC</h3>
+          <p>
+            You don't need a $3,000 GPU to run a 9-billion parameter model. I've been testing
+            Llama 3 on mid-range hardware with Ollama and the results are surprisingly usable.
+            Quantisation is the key — a Q4 model fits in 6 GB of RAM and still produces
+            coherent, useful output for automation tasks. Here's what I learned about
+            picking the right model size for your hardware.
+          </p>
+          <div class="blog-tags">
+            <span>AI</span><span>Local LLM</span><span>Ollama</span>
+          </div>
+        </article>
+
+        <article class="blog-post">
+          <time class="blog-date">February 2026</time>
+          <h3>Why I Built an AI Journal</h3>
+          <p>
+            Journaling has always helped me think clearly, but I wanted something that could
+            help me go deeper. That's why I built AI Journal — an app where the AI doesn't
+            write for you, it helps you reflect on what you've already written. Think of it
+            as a thinking partner that asks the right questions.
+          </p>
+          <div class="blog-tags">
+            <span>AI Journal</span><span>Writing</span><span>Productivity</span>
+          </div>
+        </article>
+
+        <article class="blog-post">
+          <time class="blog-date">January 2026</time>
+          <h3>What Pokemon Unite Taught Me About Strategy</h3>
+          <p>
+            MOBAs are essentially real-time decision engines. Every match in Pokemon Unite
+            is a series of trade-offs: push a lane or contest an objective? Farm or fight?
+            The same mental models apply to engineering — resource allocation, risk assessment,
+            and knowing when to commit. Gaming makes me a better builder.
+          </p>
+          <div class="blog-tags">
+            <span>Gaming</span><span>Pokemon Unite</span><span>Strategy</span>
+          </div>
+        </article>
+
       </div>
-      <p class="contact-note">Confidentiality guaranteed &nbsp;·&nbsp; Starting at $25 USD/hr</p>
+    </div>
+  </section>
+
+  <!-- GUESTBOOK -->
+  <section id="guestbook" class="guestbook">
+    <div class="section-inner">
+      <h2>Guestbook</h2>
+      <p class="section-sub">Leave a message, say hello, or share your thoughts.</p>
+
+      <div class="guestbook-form">
+        <input type="text" id="guestName" placeholder="Your name" maxlength="40" aria-label="Your name" />
+        <textarea id="guestMessage" placeholder="Leave a message..." maxlength="280" rows="3" aria-label="Your message"></textarea>
+        <button class="btn-primary" id="guestSubmit">Sign the Guestbook</button>
+      </div>
+      <div class="guestbook-entries" id="guestbookEntries"></div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2026 Aman Singh &nbsp;·&nbsp; <a href="#" id="footerEmail">amaniitd13<span class="at">[at]</span>gmail.com</a></p>
+    <p>
+      © 2026 Aman Singh &nbsp;·&nbsp;
+      <a href="rss.xml" class="rss-link" title="RSS Feed">RSS</a>
+    </p>
   </footer>
 
   <script src="script.js"></script>

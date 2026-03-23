@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aman Singh — Blog</title>
+    <link>https://amal-yadav.github.io/AI-Projects/</link>
+    <description>Thoughts on AI, music, gaming, and building things — by Aman Singh.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Mar 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://amal-yadav.github.io/AI-Projects/rss.xml" rel="self" type="application/rss+xml" />
+
+    <item>
+      <title>Running Llama 3 Locally on a Budget PC</title>
+      <link>https://amal-yadav.github.io/AI-Projects/#blog</link>
+      <description>You don't need a $3,000 GPU to run a 9-billion parameter model. I've been testing Llama 3 on mid-range hardware with Ollama and the results are surprisingly usable. Quantisation is the key — a Q4 model fits in 6 GB of RAM and still produces coherent, useful output for automation tasks.</description>
+      <pubDate>Sun, 01 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://amal-yadav.github.io/AI-Projects/#blog-llama3</guid>
+    </item>
+
+    <item>
+      <title>Why I Built an AI Journal</title>
+      <link>https://amal-yadav.github.io/AI-Projects/#blog</link>
+      <description>Journaling has always helped me think clearly, but I wanted something that could help me go deeper. That's why I built AI Journal — an app where the AI doesn't write for you, it helps you reflect on what you've already written.</description>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://amal-yadav.github.io/AI-Projects/#blog-journal</guid>
+    </item>
+
+    <item>
+      <title>What Pokemon Unite Taught Me About Strategy</title>
+      <link>https://amal-yadav.github.io/AI-Projects/#blog</link>
+      <description>MOBAs are essentially real-time decision engines. Every match in Pokemon Unite is a series of trade-offs: push a lane or contest an objective? Farm or fight? The same mental models apply to engineering.</description>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>https://amal-yadav.github.io/AI-Projects/#blog-pokemon</guid>
+    </item>
+
+  </channel>
+</rss>

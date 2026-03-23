@@ -2,7 +2,6 @@
 const html = document.documentElement;
 const toggleBtn = document.getElementById('themeToggle');
 
-// Load saved preference
 const saved = localStorage.getItem('theme');
 if (saved) html.setAttribute('data-theme', saved);
 
@@ -11,6 +10,7 @@ toggleBtn.addEventListener('click', () => {
   const next = current === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
+
 });
 
 // ── Nav active highlight on scroll ───────────────────
@@ -32,8 +32,6 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach(s => observer.observe(s));
 
 // ── Scroll-in animation ───────────────────────────────
-const cards = document.querySelectorAll('.project-card, .about, .contact');
-
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -43,32 +41,360 @@ const fadeObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.project-card').forEach(el => {
+document.querySelectorAll('.project-card, .blog-post, .now-item').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, background 0.2s, box-shadow 0.2s';
   fadeObserver.observe(el);
 });
 
-// Inject .visible rule
 const style = document.createElement('style');
-style.textContent = `.project-card.visible { opacity: 1 !important; transform: translateY(0) !important; }`;
+style.textContent = `
+  .project-card.visible, .blog-post.visible, .now-item.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+`;
 document.head.appendChild(style);
 
-// ── Email obfuscation (anti-scraper) ──────────────────
+// ── Interactive Terminal ──────────────────────────────
 (function () {
-  const btn = document.getElementById('emailBtn');
-  if (!btn) return;
-  const u = btn.getAttribute('data-u');
-  const d = btn.getAttribute('data-d');
-  const addr = u + '@' + d;
-  const text = document.getElementById('emailText');
-  if (text) text.textContent = addr;
-  btn.href = 'mai' + 'lto:' + addr;
+  const input = document.getElementById('terminalInput');
+  const output = document.getElementById('terminalOutput');
+  const body = document.getElementById('terminalBody');
+  if (!input || !output) return;
 
-  const footer = document.getElementById('footerEmail');
-  if (footer) {
-    footer.href = 'mai' + 'lto:' + addr;
-    footer.textContent = addr;
+  const commands = {
+    help: () =>
+      '<span class="t-accent">Available commands:</span>\n' +
+      '  help      — show this message\n' +
+      '  about     — who is Aman?\n' +
+      '  projects  — list projects\n' +
+      '  music     — music info\n' +
+      '  pokemon   — Pokemon Unite\n' +
+      '  now       — what I\'m up to\n' +
+      '  neofetch  — system info\n' +
+      '  ls        — list files\n' +
+      '  date      — current date\n' +
+      '  whoami    — you tell me\n' +
+      '  clear     — clear terminal\n' +
+      '  secret    — ???',
+
+    about: () =>
+      '<span class="t-accent">Aman Singh</span>\n' +
+      'AI Automation Engineer, songwriter,\n' +
+      'music composer, Pokemon Unite player.\n' +
+      'I make AI run on your machine.',
+
+    projects: () =>
+      '<span class="t-accent">Projects:</span>\n' +
+      '  <span class="t-green">●</span> Local AI (up to 9B params)\n' +
+      '  <span class="t-green">●</span> AI Journal\n' +
+      '  <span class="t-green">●</span> Pokemon Unite strategies',
+
+    music: () =>
+      '<span class="t-accent">Music:</span>\n' +
+      '  Songwriter & composer.\n' +
+      '  Original lyrics & melodies.\n' +
+      '  <span class="t-dim">→ Check out the Music section.</span>',
+
+    pokemon: () =>
+      '<span class="t-yellow">⚡ Pokemon Unite</span>\n' +
+      '  Avid MOBA player.\n' +
+      '  Studying team comp & objectives.\n' +
+      '  Gaming = real-time strategy engine.',
+
+    gaming: () => commands.pokemon(),
+
+    now: () =>
+      '<span class="t-accent">Right now:</span>\n' +
+      '  Building local AI pipelines\n' +
+      '  Developing AI Journal app\n' +
+      '  Composing new music\n' +
+      '  Grinding Pokemon Unite ranked',
+
+    neofetch: () =>
+      '<span class="t-accent">aman</span>@<span class="t-accent">dev</span>\n' +
+      '────────────────\n' +
+      'OS:     macOS / Linux\n' +
+      'Shell:  zsh\n' +
+      'Stack:  Python, Ollama, JS\n' +
+      'AI:     Llama 3, Phi-3, Mistral\n' +
+      'Music:  Songwriter & Composer\n' +
+      'Game:   Pokemon Unite\n' +
+      'Theme:  ' + html.getAttribute('data-theme'),
+
+    ls: () =>
+      'automate.py    llama3.gguf\n' +
+      'journal.py     config.yaml\n' +
+      'songs/         pokemon-notes/\n' +
+      'README.md      .secrets 🔒',
+
+    date: () =>
+      '<span class="t-green">' + new Date().toLocaleString() + '</span>',
+
+    whoami: () =>
+      'You\'re a visitor. Welcome. 👋',
+
+    sudo: () =>
+      '<span class="t-red">Nice try.</span> 🔒',
+
+    rm: () =>
+      '<span class="t-red">Absolutely not.</span>',
+
+    secret: () =>
+      '<span class="t-yellow">🎮 Try the Konami code on this page...</span>\n' +
+      '<span class="t-dim">↑ ↑ ↓ ↓ ← → ← → B A</span>',
+
+    hello: () =>
+      '<span class="t-green">Hey there! 👋</span>\n' +
+      'Welcome to aman.dev',
+
+    hi: () => commands.hello(),
+
+    cat: () =>
+      '<span class="t-dim">🐱 meow</span>',
+
+    exit: () =>
+      '<span class="t-dim">There is no escape. You\'re here forever.</span> 😄',
+
+    matrix: () => {
+      document.body.style.transition = 'filter 1s';
+      document.body.style.filter = 'hue-rotate(90deg)';
+      setTimeout(() => { document.body.style.filter = ''; }, 3000);
+      return '<span class="t-green">Entering the matrix...</span>';
+    },
+
+    pikachu: () =>
+      '<span class="t-yellow">    ⚡⚡\n' +
+      '   (°o°)\n' +
+      '   /|  |\\\n' +
+      '    |  |\n' +
+      '    d  b</span>\n' +
+      'Pika pika!',
+  };
+
+  function addLine(text) {
+    const p = document.createElement('p');
+    p.innerHTML = text;
+    output.appendChild(p);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    const cmd = input.value.trim().toLowerCase();
+    input.value = '';
+    if (!cmd) return;
+
+    addLine('<span class="t-dim">~$</span> ' + cmd.replace(/</g, '&lt;'));
+
+    if (cmd === 'clear') {
+      output.innerHTML = '';
+      return;
+    }
+
+    const handler = commands[cmd.split(' ')[0]];
+    if (handler) {
+      addLine(handler());
+    } else {
+      addLine('<span class="t-red">command not found:</span> ' + cmd.replace(/</g, '&lt;') + '\n<span class="t-dim">Type \'help\' for available commands.</span>');
+    }
+  });
+
+  // Focus terminal on click
+  document.querySelector('.terminal').addEventListener('click', () => {
+    input.focus();
+  });
+})();
+
+// ── Reaction Buttons (localStorage) ───────────────────
+(function () {
+  const buttons = document.querySelectorAll('.reaction-btn');
+
+  buttons.forEach(btn => {
+    const project = btn.getAttribute('data-project');
+    const key = 'reaction_' + project;
+    const liked = localStorage.getItem(key) === '1';
+    const countEl = btn.querySelector('.reaction-count');
+
+    if (liked) {
+      btn.classList.add('liked');
+      countEl.textContent = '1';
+    }
+
+    btn.addEventListener('click', () => {
+      const isLiked = btn.classList.contains('liked');
+
+      if (isLiked) {
+        btn.classList.remove('liked');
+        localStorage.removeItem(key);
+        countEl.textContent = '0';
+      } else {
+        btn.classList.add('liked', 'pop');
+        localStorage.setItem(key, '1');
+        countEl.textContent = '1';
+        setTimeout(() => btn.classList.remove('pop'), 300);
+      }
+    });
+  });
+})();
+
+// ── Konami Code Easter Egg ────────────────────────────
+(function () {
+  const sequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  let index = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === sequence[index] || e.key.toLowerCase() === sequence[index]) {
+      index++;
+      if (index === sequence.length) {
+        index = 0;
+        launchConfetti();
+      }
+    } else {
+      index = 0;
+    }
+  });
+
+  function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const colors = ['#7c6af7', '#ff5064', '#febc2e', '#28c840', '#00bfff', '#ff69b4'];
+
+    for (let i = 0; i < 150; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: Math.random() * 10 + 5,
+        h: Math.random() * 6 + 3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 4,
+        vy: Math.random() * 3 + 2,
+        rotation: Math.random() * 360,
+        rv: (Math.random() - 0.5) * 10,
+      });
+    }
+
+    let frame = 0;
+    const maxFrames = 180;
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, 1 - frame / maxFrames);
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.rotation += p.rv;
+      });
+
+      frame++;
+      if (frame < maxFrames) {
+        requestAnimationFrame(animate);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    animate();
   }
 })();
+
+// ── Guestbook (localStorage, no sign-in) ──────────────
+(function () {
+  const STORAGE_KEY = 'guestbook_entries';
+  const container = document.getElementById('guestbookEntries');
+  const nameInput = document.getElementById('guestName');
+  const msgInput = document.getElementById('guestMessage');
+  const submitBtn = document.getElementById('guestSubmit');
+  if (!container || !submitBtn) return;
+
+  // Pre-seeded entries that always show
+  const seeded = [
+    { name: 'Aman', text: 'Welcome to my guestbook! Leave a message and say hello.', date: '2026-03-01', pinned: true },
+  ];
+
+  function loadEntries() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveEntries(entries) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+  }
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function renderEntries() {
+    const userEntries = loadEntries();
+    const all = [...seeded, ...userEntries];
+    container.innerHTML = '';
+
+    all.forEach(entry => {
+      const el = document.createElement('div');
+      el.className = 'guest-entry' + (entry.pinned ? ' pinned' : '');
+      el.innerHTML =
+        '<div class="guest-header">' +
+          '<span class="guest-name">' + escapeHtml(entry.name) + '</span>' +
+          '<span class="guest-date">' + formatDate(entry.date) + '</span>' +
+        '</div>' +
+        '<p class="guest-text">' + escapeHtml(entry.text) + '</p>';
+      container.appendChild(el);
+    });
+  }
+
+  submitBtn.addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    const text = msgInput.value.trim();
+    if (!name || !text) return;
+
+    const entries = loadEntries();
+    entries.push({
+      name: name,
+      text: text,
+      date: new Date().toISOString().split('T')[0],
+    });
+    saveEntries(entries);
+
+    nameInput.value = '';
+    msgInput.value = '';
+    renderEntries();
+  });
+
+  // Allow Enter in the name field to move to message
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      msgInput.focus();
+    }
+  });
+
+  renderEntries();
+})();
+
