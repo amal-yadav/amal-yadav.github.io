@@ -143,24 +143,8 @@ nav ul a:hover { color: var(--text); }
   position: relative;
 }
 
-.hero::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  background: url('profile.jpg') center top / cover no-repeat;
-  opacity: 0.22;
-  z-index: 0;
-  pointer-events: none;
-}
 
-[data-theme="light"] .hero::before {
-  opacity: 0.15;
-}
-
-.hero-content { flex: 1; position: relative; z-index: 2; }
+.hero-content { flex: 1; }
 
 .hero-tag {
   display: inline-block;
@@ -234,7 +218,7 @@ nav ul a:hover { color: var(--text); }
 .btn-kofi:hover { opacity: 0.88; transform: translateY(-1px); }
 
 /* ── TERMINAL (Interactive) ────────────────────────── */
-.hero-visual { flex: 1; display: flex; justify-content: center; position: relative; z-index: 2; }
+.hero-visual { flex: 1; display: flex; justify-content: center; }
 
 .terminal {
   background: var(--terminal-bg);
