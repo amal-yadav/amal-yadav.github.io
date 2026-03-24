@@ -14,6 +14,7 @@ const i18n = {
     'hero.sub': 'Modelos de IA locales de hasta 9 mil millones de parametros. Pipelines de automatizacion personalizados. Sin nube. Sin suscripciones. Todo en tu propia PC.',
     'hero.cta1': 'Ver Proyectos',
     'hero.cta2': 'Saludar',
+    'hero.kofi': '🍦 Invitame un helado',
 
     // Terminal
     'terminal.loaded': 'Modelo cargado localmente',
