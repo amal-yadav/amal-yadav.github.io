@@ -85,6 +85,7 @@ const i18n = {
     'guestbook.title': 'Libro de Visitas',
     'guestbook.sub': 'Deja un mensaje, saluda o comparte tus pensamientos.',
     'guestbook.name': 'Tu nombre',
+    'guestbook.email': 'Tu email (opcional)',
     'guestbook.message': 'Deja un mensaje...',
     'guestbook.submit': 'Firmar el Libro',
   }
@@ -599,6 +600,7 @@ function fbPush(path, data) {
 // ── Firebase Guestbook (REST API, no sign-in) ────────
 (function () {
   const nameInput = document.getElementById('guestName');
+  const emailInput = document.getElementById('guestEmail');
   const msgInput = document.getElementById('guestMessage');
   const submitBtn = document.getElementById('guestSubmit');
   if (!submitBtn) return;
@@ -629,15 +631,21 @@ function fbPush(path, data) {
     submitBtn.textContent = getSubmitText('sending');
     submitBtn.style.opacity = '0.6';
 
-    fbPush('guestbook', {
+    const email = emailInput.value.trim();
+
+    const entry = {
       name: name.slice(0, 40),
       text: text.slice(0, 280),
       date: new Date().toISOString().split('T')[0],
       timestamp: Date.now(),
-    }).then((res) => {
+    };
+    if (email) entry.email = email.slice(0, 100);
+
+    fbPush('guestbook', entry).then((res) => {
       if (res && res.name) {
         localStorage.setItem('guestbook_last_post', String(Date.now()));
         nameInput.value = '';
+        emailInput.value = '';
         msgInput.value = '';
         submitBtn.textContent = getSubmitText('sent');
         submitBtn.style.opacity = '1';
@@ -654,9 +662,9 @@ function fbPush(path, data) {
   });
 
   nameInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      msgInput.focus();
-    }
+    if (e.key === 'Enter') { e.preventDefault(); emailInput.focus(); }
+  });
+  emailInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); msgInput.focus(); }
   });
 })();
