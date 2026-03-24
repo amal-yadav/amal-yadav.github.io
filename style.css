@@ -138,19 +138,27 @@ nav ul a:hover { color: var(--text); }
   padding: 8rem 2rem 4rem;
   max-width: 1100px;
   margin: 0 auto;
+  position: relative;
 }
 
-.hero-content { flex: 1; }
-
-.hero-photo {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--accent);
-  box-shadow: 0 0 30px var(--accent-glow);
-  margin-bottom: 1.5rem;
+.hero::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background: url('profile.jpg') center top / cover no-repeat;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
 }
+
+[data-theme="light"] .hero::before {
+  opacity: 0.08;
+}
+
+.hero-content { flex: 1; position: relative; z-index: 2; }
 
 .hero-tag {
   display: inline-block;
@@ -212,7 +220,7 @@ nav ul a:hover { color: var(--text); }
 .btn-secondary:hover { background: var(--bg-card); transform: translateY(-1px); }
 
 /* ── TERMINAL (Interactive) ────────────────────────── */
-.hero-visual { flex: 1; display: flex; justify-content: center; }
+.hero-visual { flex: 1; display: flex; justify-content: center; position: relative; z-index: 2; }
 
 .terminal {
   background: var(--terminal-bg);
