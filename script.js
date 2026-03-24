@@ -85,7 +85,7 @@ const i18n = {
     'guestbook.title': 'Libro de Visitas',
     'guestbook.sub': 'Deja un mensaje, saluda o comparte tus pensamientos.',
     'guestbook.name': 'Tu nombre',
-    'guestbook.email': 'Tu email (opcional)',
+    'guestbook.email': 'Tu email',
     'guestbook.message': 'Deja un mensaje...',
     'guestbook.submit': 'Firmar el Libro',
   }
@@ -632,14 +632,15 @@ function fbPush(path, data) {
     submitBtn.style.opacity = '0.6';
 
     const email = emailInput.value.trim();
+    if (!email) return;
 
     const entry = {
       name: name.slice(0, 40),
+      email: email.slice(0, 100),
       text: text.slice(0, 280),
       date: new Date().toISOString().split('T')[0],
       timestamp: Date.now(),
     };
-    if (email) entry.email = email.slice(0, 100);
 
     fbPush('guestbook', entry).then((res) => {
       if (res && res.name) {
