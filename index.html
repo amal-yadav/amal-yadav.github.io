@@ -8,11 +8,11 @@
   <!-- Security headers -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'none';
-    script-src 'self' https://cloud.umami.is;
+    script-src 'self' https://cloud.umami.is https://www.googletagmanager.com;
     style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
     font-src https://fonts.gstatic.com;
     img-src 'self' data:;
-    connect-src 'self' https://cloud.umami.is https://gateway.umami.is https://eu.umami.is https://api-gateway.umami.dev https://api-gateway-eu.umami.dev https://amal-yadav-default-rtdb.firebaseio.com;
+    connect-src 'self' https://cloud.umami.is https://gateway.umami.is https://eu.umami.is https://api-gateway.umami.dev https://api-gateway-eu.umami.dev https://amal-yadav-default-rtdb.firebaseio.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com;
     base-uri 'self';
     form-action 'none';
   " />
@@ -26,6 +26,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="style.css" />
   <script defer src="https://cloud.umami.is/script.js" data-website-id="efac4a14-c666-4147-92e6-efcdf594c1bc"></script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EP5NB6KGW"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
