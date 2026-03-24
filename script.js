@@ -546,7 +546,7 @@ function fbPush(path, data) {
     canvas.height = window.innerHeight;
 
     const particles = [];
-    const colors = ['#7c6af7', '#ff5064', '#febc2e', '#28c840', '#00bfff', '#ff69b4'];
+    const colors = ['#c4836a', '#6b8f71', '#c4a24a', '#b8956a', '#c46a5a', '#8aaa7a'];
 
     for (let i = 0; i < 150; i++) {
       particles.push({
